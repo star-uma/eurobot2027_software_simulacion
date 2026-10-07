@@ -1,11 +1,29 @@
+<!--Primeras dos líneas, versión y referencia para que si, al compilar, da error, lo muestre por pantalla y autocomplete en el error-->
 <?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+
+
 <package format="3">
+  <!-- Nombre del paquete al que se le hará referencia para lanzar los mundos o nodos-->
   <name>eurobot2027_software_simulacion</name>
+  <!-- Versión de desarrollo-->
   <version>0.0.0</version>
+  <!-- Descripción, mantenedor y licencia (términos legales) del paquete -->
   <description>Paquete eurobot2027_software_simulacion para Eurobot 2027</description>
   <maintainer email="ivan@todo.me">TnTivanTnT</maintainer>
   <license>Apache License 2.0</license>
+  <!-- Descarga la herramienta de compilación, en este caso es C++, en python será ament_python, va con rosdep -->
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <!-- Dependencias de compilación y ejecución del paquete, en este caso se necesita xacro, robot_state_publisher y Gazebo (ros_gz_sim y ros_gz_bridge, puente entre ros2 y gazebo) -->
+  <depend>xacro</depend>
+  <depend>robot_state_publisher</depend>
+  <depend>ros_gz_sim</depend>
+  <depend>ros_gz_bridge</depend>
+  
+  <!-- Sección reservada para exponer metadatos-->
   <export>
-    <build_type>ament_python</build_type>
+  <!-- Se vuelve a poner el cmake para indicar a colcon que use cmake no python-->
+    <build_type>ament_cmake</build_type>
   </export>
 </package>
