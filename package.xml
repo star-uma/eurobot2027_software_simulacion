@@ -1,6 +1,7 @@
-<!--Primeras dos líneas, versión y referencia para que si, al compilar, da error, lo muestre por pantalla y autocomplete en el error-->
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<!--Primeras dos líneas, versión y referencia para que si, al compilar, da error, lo muestre por pantalla y autocomplete en el error-->
+<!--No puede haber nada en la primera línea menos el version-->
 
 
 <package format="3">
@@ -20,7 +21,7 @@
   <depend>robot_state_publisher</depend>
   <depend>ros_gz_sim</depend>
   <depend>ros_gz_bridge</depend>
-  
+  <exec_depend>joint_state_publisher_gui</exec_depend>
   <!-- Sección reservada para exponer metadatos-->
   <export>
   <!-- Se vuelve a poner el cmake para indicar a colcon que use cmake no python-->
