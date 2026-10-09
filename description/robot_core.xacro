@@ -1,6 +1,13 @@
 <?xml version="1.0"?>
 <!-- Etiqueta raíz que indica que este es un archivo de robot y que usará variables Xacro -->
+
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- ########################################################## -->
+    <!-- #####################   LIBRERÍAS    ##################### -->
+    <!-- ########################################################## -->
+
+    <xacro:include filename="inertial_macros.xacro" />
 
     <!-- ########################################################## -->
     <!-- ########################################################## -->
@@ -24,6 +31,7 @@
     <!--                                                            -->
     <!-- Es el origen matemático (0,0,0) sin geometría ni masa.     -->
     <!-- Su única función es ser el punto de referencia global.     -->
+    <!-- Se anclan a él el chasis y los elementos motrices.         -->
     <!-- Lo hemos situado en el centro del eje trasero motriz.      -->
     <!-- ########################################################## -->
     <!-- ########################################################## --> 
@@ -32,15 +40,13 @@
     </link>
 
     <!-- ########################################################## -->
+    <!-- #######################   CHASIS   ####################### -->
     <!-- ########################################################## -->
-    <!--                CHASIS (Estructura principal)               -->
-    <!-- ########################################################## -->
-    <!-- ########################################################## -->
-    
+
     <!-- JOINT: Unión mecánica, fixed es como una soldadura-->
     <joint name="chassis_joint" type="fixed">
-        <parent link="base_link"/>                                      <!-- parent es a quien nos unimos-->
-        <child link="chassis"/>                                         <!-- child es quien se une al parent-->
+        <parent link="base_link"/>                                                                      <!-- parent es a quien nos unimos-->
+        <child link="chassis"/>                                                                         <!-- child es quien se une al parent-->
         <origin xyz="-0.05 0 0"/>
     </joint>
 
@@ -75,12 +81,23 @@
         <!-- de físicas. Sin esto el robot volará o temblará.       -->
         <!-- Cuando se tenga el archivo stl del chasis se miran en  -->
         <!-- propiedades. Pasar los valores a m, kg*m², kg          -->
-        <inertial>
+        
+        <!--        FORMA NOMAL DE USAR LA MACRO DE INERCIA         -->
+        
+<!--        <inertial>                                                                          -->
+<!--            <origin xyz="0.15 0 0.075" rpy="0 0 0"/>                                        -->
+<!--            <mass value="5.0"/>-->
+                  <!-- Inercia matemática de un prisma rectangular -->
+<!--            <inertia ixx="0.046" ixy="0.0" ixz="0.0" iyy="0.046" iyz="0.0" izz="0.075"/>    -->
+<!--        </inertial>                                                                         -->
+        
+        <!--        FORMA DE USAR LA MACRO DE INERCIA               -->
+
+        <xacro:inertial_box mass="5.0" x="0.3" y="0.3" z="0.15">
             <origin xyz="0.15 0 0.075" rpy="0 0 0"/>
-            <mass value="5.0"/>
-            <!-- Inercia matemática de un prisma rectangular -->
-            <inertia ixx="0.046" ixy="0.0" ixz="0.0" iyy="0.046" iyz="0.0" izz="0.075"/>
-        </inertial>
+        </xacro:inertial_box>
+        
+
     </link>
 
     <!-- ########################################################## -->
@@ -93,6 +110,12 @@
     <!-- ########################################################## -->
     <!-- ########################################################## -->
     
+
+    <!-- ########################################################## -->
+    <!-- #######################   RUEDAS   ####################### -->
+    <!-- ########################################################## -->
+
+
     <xacro:macro name="rueda_motriz" params="prefix offset_y rotacion_z">
         
         <!-- type="continuous" indica que gira sin tope sobre un eje-->
@@ -107,21 +130,22 @@
 
         <link name="${prefix}_wheel">
             <visual>
-                <origin xyz="0 0 0" rpy="0 0 ${rotacion_z}"/>                       <!-- No necesario ahora pero por si al importar el stl no encaja-->
+                <origin xyz="0 0 0" rpy="0 0 ${rotacion_z}"/>                               <!-- No necesario ahora pero por si al importar el stl no encaja-->
                 <geometry>
-                    <cylinder radius="0.1" length="0.04"/>                          <!-- <mesh filename="file://$(find eurobot2027_software_simulacion)/description/meshes/rueda.stl" scale="1 1 1"/> para cuando se añada el stl-->
+                    <cylinder radius="0.0325" length="0.04"/>                               <!-- <mesh filename="file://$(find eurobot2027_software_simulacion)/description/meshes/rueda.stl" scale="1 1 1"/> para cuando se añada el stl-->
                 </geometry>
                 <material name="blue"/>
             </visual>
             <collision>
                 <geometry>
-                    <cylinder radius="0.1" length="0.04"/>
+                    <cylinder radius="0.0325" length="0.04"/>
                 </geometry>
             </collision>
-            <inertial>
-                <mass value="1.0"/>
-                <inertia ixx="0.0026" ixy="0" ixz="0" iyy="0.0026" iyz="0" izz="0.005"/>
-            </inertial>
+            
+            <xacro:inertial_cylinder mass="1.0" length="0.04" radius="0.0325">
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+            </xacro:inertial_cylinder>
+
         </link>
     </xacro:macro>
 
@@ -135,5 +159,44 @@
     
     <xacro:rueda_motriz prefix="left" offset_y="0.2" rotacion_z="0"/>
     <xacro:rueda_motriz prefix="right" offset_y="-0.2" rotacion_z="${pi}"/>
+
+    <!-- ########################################################## -->
+    <!-- #####################   RUEDA LOCA   ##################### -->
+    <!-- ########################################################## -->
+    <!-- Se pone unión fixed y después en gazebo se pondrá          -->
+    <!-- rozamineto nulo para que actue como rueda loca             -->
+    
+    <joint name="caster_wheel_joint" type="fixed">
+        <parent link="chassis"/>                                                             <!-- parent es a quien nos unimos-->
+        <child link="caster_wheel"/>                                                         <!-- child es quien se une al parent-->
+        <origin xyz="0.25 0 0.0"/>
+
+    </joint>
+
+    <!-- LINK: Las propiedades físicas de la pieza -->
+    <link name="caster_wheel">
+        
+        <visual>
+            <origin xyz="0 0 0.0"/>
+            <geometry>
+                <sphere radius="0.0325"/>
+            </geometry>
+            <material name="blue"/>
+        </visual>
+        
+        <collision>
+            <origin xyz="0 0 0"/>
+            <geometry>
+                <sphere radius="0.0325"/>
+            </geometry>
+        </collision>
+        
+        <xacro:inertial_sphere mass="0.1" radius="0.0325">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_sphere>
+    
+    </link>
+
+
 
 </robot>
