@@ -198,5 +198,23 @@
     </link>
 
 
+    <!-- ########################################################## -->
+    <!-- ########################################################## -->
+    <!-- CONTROLADOR DE TRACCIÓN DIFERENCIAL (GAZEBO)               -->
+    <!-- ########################################################## -->
+    <!-- ########################################################## -->
+
+    <gazebo>
+        <plugin filename="ignition-gazebo-diff-drive-system" name="ignition::gazebo::systems::DiffDrive">
+            <left_joint>left_wheel_joint</left_joint>
+            <right_joint>right_wheel_joint</right_joint>
+            <!-- Separación total entre ruedas (0.2 + 0.2) -->
+            <wheel_separation>0.4</wheel_separation>
+            <!-- Radio de la rueda en metros -->
+            <wheel_radius>0.0325</wheel_radius>
+            <odom_publish_frequency>50</odom_publish_frequency>
+            <topic>cmd_vel</topic>
+        </plugin>
+    </gazebo>
 
 </robot>
