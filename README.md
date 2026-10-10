@@ -1,7 +1,7 @@
 # Eurobot 2027 - Software de Simulación
 
 ```text
-Ejecutar comandos en eurobot2027_ws, dos carpetas anteriores.
+Ejecutar comandos en eurobot2027_ws, dos carpetas anteriores. Necesario hacer los pasos de [eurobot2027_software](https://github.com/star-uma/eurobot2027_software.git).
 ```
 ## Instalación gazebo ignition
 
