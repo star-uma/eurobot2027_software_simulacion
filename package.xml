@@ -17,11 +17,11 @@
   <buildtool_depend>ament_cmake</buildtool_depend>
 
   <!-- Dependencias de compilación y ejecución del paquete, en este caso se necesita xacro, robot_state_publisher y Gazebo (ros_gz_sim y ros_gz_bridge, puente entre ros2 y gazebo) -->
-  <depend>xacro</depend>
-  <depend>robot_state_publisher</depend>
-  <depend>ros_gz_sim</depend>
-  <depend>ros_gz_bridge</depend>
-  <exec_depend>joint_state_publisher_gui</exec_depend>
+  <exec_depend>ros_gz_sim</exec_depend>
+  <exec_depend>ros_gz_bridge</exec_depend>
+  <exec_depend>teleop_twist_keyboard</exec_depend>
+  <exec_depend>xacro</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
   <!-- Sección reservada para exponer metadatos-->
   <export>
   <!-- Se vuelve a poner el cmake para indicar a colcon que use cmake no python-->
