@@ -48,7 +48,12 @@ def generate_launch_description():
     bridge = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
-        arguments=['/cmd_vel@geometry_msgs/msg/Twist]ignition.msgs.Twist'],
+        arguments=[
+            '/cmd_vel@geometry_msgs/msg/Twist]ignition.msgs.Twist',
+            '/scan@sensor_msgs/msg/LaserScan[ignition.msgs.LaserScan',
+            '/joint_states@sensor_msgs/msg/JointState[ignition.msgs.Model',
+            '/camera/image_raw@sensor_msgs/msg/Image[ignition.msgs.Image' 
+        ],
         output='screen'
     )
 

@@ -15,6 +15,48 @@
         <geometry><box><size>0.11 0.11 0.3</size></box></geometry>
         <material><ambient>0.8 0.1 0.1 1</ambient><diffuse>0.8 0.1 0.1 1</diffuse></material>
       </visual>
+
+    <!-- No le gusta las imágenes .svg-->
+    <!-- Cara Frontal (+X). La caja mide 0.11 de ancho, el borde está en 0.055. Lo ponemos en 0.056 -->
+    <visual name="aruco_frente">
+      <pose>0.056 0 0 0 0 0</pose>
+      <geometry><box><size>0.001 0.08 0.08</size></box></geometry>
+      <material>
+        <ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse>
+        <pbr><metal><albedo_map>materials/textures/aruco_13.png</albedo_map></metal></pbr>
+      </material>
+    </visual>
+
+    <!-- Cara Trasera (-X) -->
+    <visual name="aruco_atras">
+      <pose>-0.056 0 0 0 0 0</pose>
+      <geometry><box><size>0.001 0.08 0.08</size></box></geometry>
+      <material>
+        <ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse>
+        <pbr><metal><albedo_map>materials/textures/aruco_13.png</albedo_map></metal></pbr>
+      </material>
+    </visual>
+
+    <!-- Cara Izquierda (+Y) -->
+    <visual name="aruco_izq">
+      <pose>0 0.056 0 0 0 0</pose>
+      <geometry><box><size>0.08 0.001 0.08</size></box></geometry>
+      <material>
+        <ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse>
+        <pbr><metal><albedo_map>materials/textures/aruco_13.png</albedo_map></metal></pbr>
+      </material>
+    </visual>
+
+    <!-- Cara Derecha (-Y) -->
+    <visual name="aruco_der">
+      <pose>0 -0.056 0 0 0 0</pose>
+      <geometry><box><size>0.08 0.001 0.08</size></box></geometry>
+      <material>
+        <ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse>
+        <pbr><metal><albedo_map>materials/textures/aruco_13.png</albedo_map></metal></pbr>
+      </material>
+    </visual>
+    
     </link>
   </model>
 </sdf>
