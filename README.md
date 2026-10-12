@@ -4,19 +4,19 @@ Ejecutar comandos en eurobot2027_ws, dos carpetas anteriores. Necesario hacer lo
 
 ## Instalación gazebo ignition
 
-1. Configurar paquetes de los repositorios.
+1. Herramientas necesarias.
 
 ```bash
-sudo sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list'
-wget http://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add -
-
 sudo apt-get update
+sudo apt-get install lsb-release gnupg
 ```
 
-2. Instalar Gazebo Ignition
+2. Instalar Gazebo Ignition Fortress
 ```bash
-sudo apt-get install libignition-gazebo<#>-dev
-```
+sudo curl https://packages.osrfoundation.org/gazebo.gpg --output /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] https://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/gazebo-stable.list > /dev/null
+sudo apt-get update
+sudo apt-get install ignition-fortress```
 ## Instalación de dependencias 
 
 ```bash
