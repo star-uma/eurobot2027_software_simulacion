@@ -217,4 +217,24 @@
         </plugin>
     </gazebo>
 
+
+    <gazebo>
+        <plugin filename="ignition-gazebo-diff-drive-system" name="ignition::gazebo::systems::DiffDrive">
+            <left_joint>left_wheel_joint</left_joint>
+            <right_joint>right_wheel_joint</right_joint>
+            <wheel_separation>0.4</wheel_separation>
+            <wheel_radius>0.0325</wheel_radius>
+
+            <!-- Publica la odeometría a 50 Hz -->
+            <odom_publish_frequency>50</odom_publish_frequency>
+            <!-- Topics -->
+            <topic>cmd_vel</topic>
+            <odom_topic>odom</odom_topic>
+            <tf_topic>tf</tf_topic>
+            <!-- Frames: nombre de los datos que van por el topic tf-->
+            <frame_id>odom</frame_id>                                                       <!-- frame_id es el nombre del frame padre, el que se no mueve -->
+            <child_frame_id>base_link</child_frame_id>                                      <!-- child_frame_id es el nombre del frame hijo, el que se mueve respecto al padre -->   
+        </plugin>
+    </gazebo>
+
 </robot>

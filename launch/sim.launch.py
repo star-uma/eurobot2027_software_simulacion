@@ -45,6 +45,8 @@ def generate_launch_description():
     )
 
 
+    # Estructura arguments
+    # / topic_name @ configuración(paquete_al_hace_referncia) ("[" msg_hacia_ros2 "]" msg_hacia_ignition "@" bidireccional) estructura_interna_msg
     bridge = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
@@ -52,10 +54,21 @@ def generate_launch_description():
             '/cmd_vel@geometry_msgs/msg/Twist]ignition.msgs.Twist',
             '/scan@sensor_msgs/msg/LaserScan[ignition.msgs.LaserScan',
             '/joint_states@sensor_msgs/msg/JointState[ignition.msgs.Model',
-            '/camera/image_raw@sensor_msgs/msg/Image[ignition.msgs.Image' 
+            '/camera/image_raw@sensor_msgs/msg/Image[ignition.msgs.Image',
+            '/odom@nav_msgs/msg/Odometry[ignition.msgs.Odometry',
+            '/tf@tf2_msgs/msg/TFMessage[ignition.msgs.Pose_V' 
         ],
         output='screen'
     )
 
+    # Incio en el mismo lugar que map y odom. Luego map se actualiza con el lidar de forma discreta y odom se actualiza con la odometría del robot
+    # de forma continua. El sensor va corrigiendo los fallos de la odomtería. Nodo provisional hasta que se implemente el nodo de NAV2
+    static_tf = Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        arguments=['0', '0', '0', '0', '0', '0', 'map', 'odom'],
+        output='screen'
+    )
 
-    return LaunchDescription([env_ign, env_gz, rsp, gazebo, spawn_entity, bridge])
+    return LaunchDescription([env_ign, env_gz, rsp, gazebo, spawn_entity, bridge, static_tf])
+
